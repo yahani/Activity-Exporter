@@ -1,0 +1,10 @@
+# Reproduction scenario — run these one at a time from this folder.
+
+python demo.py reset
+python demo.py start A1 --now "2026-10-26 11:58"
+python demo.py start A2 --now "2026-10-26 11:59"
+python demo.py finish A2 4 --now "2026-10-26 12:00"
+python demo.py export --now "2026-10-26 12:01" --mode buggy
+python demo.py finish A1 3 --now "2026-10-26 12:02"
+python demo.py export --now "2026-10-26 12:06" --mode buggy
+python demo.py missing
