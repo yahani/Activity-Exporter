@@ -124,7 +124,7 @@ def export_activities(conn, now):
 
     for row in rows:
         conn.execute(
-            'INSERT INTO exported (activity_id, start_time, finish_time, score, exported_at) VALUES (?, ?, ?, ?, ?)',
+            'INSERT OR REPLACE INTO exported (activity_id, start_time, finish_time, score, exported_at) VALUES (?, ?, ?, ?, ?)',
             (row['activity_id'], row['start_time'], row['finish_time'], row['score'], now),
         )
     if rows:
