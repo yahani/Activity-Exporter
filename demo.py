@@ -6,7 +6,7 @@ via --now so events and exporter runs happen exactly when you say.
 
     python demo.py start A1 --now "2026-10-26 11:58"
     python demo.py finish A1 3 --now "2026-10-26 12:02"
-    python demo.py export --now "2026-10-26 12:01" --mode buggy
+    python demo.py export --now "2026-10-26 12:01"
     python demo.py show
     python demo.py missing
     python demo.py reset
@@ -109,7 +109,7 @@ def cmd_finish(conn, args):
     print(f'[{args.now}] {args.activity_id} finished with score {args.score}')
 
 
-def export_buggy(conn, now):
+def export_activities(conn, now):
     pointer_before = get_pointer(conn)
     rows = conn.execute(
         """
@@ -133,14 +133,9 @@ def export_buggy(conn, now):
     return pointer_before, rows
 
 
-EXPORTERS = {
-    'buggy': export_buggy,
-}
-
-
 def cmd_export(conn, args):
-    print(f'=== export run at {args.now} (mode: {args.mode}) ===')
-    pointer_before, sent = EXPORTERS[args.mode](conn, args.now)
+    print(f'=== export run at {args.now} ===')
+    pointer_before, sent = export_activities(conn, args.now)
     print(f'\nSent:    {", ".join(r["activity_id"] for r in sent) or "nothing"}')
     print(f'Pointer: {pointer_before} -> {get_pointer(conn)}')
 
@@ -193,7 +188,6 @@ def build_parser():
 
     p = sub.add_parser('export', help='run the exporter once')
     p.add_argument('--now', type=parse_time, required=True)
-    p.add_argument('--mode', choices=sorted(EXPORTERS), default='buggy')
     p.set_defaults(func=cmd_export)
 
     sub.add_parser('show', help='print all tables').set_defaults(func=cmd_show)

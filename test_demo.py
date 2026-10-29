@@ -4,7 +4,7 @@ from unittest import mock
 
 import demo
 
-export = demo.export_buggy
+export = demo.export_activities
 
 
 class ExporterTest(unittest.TestCase):
