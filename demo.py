@@ -16,7 +16,7 @@ import sqlite3
 import sys
 from datetime import datetime
 from pathlib import Path
-from exporter import export_activities, get_pointer, set_pointer
+from exporter import export_activities, get_pointer, set_pointer, print_rows
 
 DB_PATH = Path(__file__).with_name('activities.db')
 TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
