@@ -3,15 +3,16 @@ import unittest
 from unittest import mock
 
 import demo
+import exporter
 
-export = demo.export_activities
+export = exporter.export_activities
 
 # python3 -m unittest -v 2>&1 | tee test_results_before.txt
 # python3 -m unittest -v 2>&1 | tee test_results_after.txt
 
 class ExporterTest(unittest.TestCase):
     def setUp(self):
-        self.enterContext(mock.patch('demo.print_rows'))  # keep test output clean
+        self.enterContext(mock.patch('exporter.print_rows'))  # keep test output clean
         self.conn = sqlite3.connect(':memory:')
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(demo.SCHEMA)
